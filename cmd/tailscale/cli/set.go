@@ -58,11 +58,15 @@ Only settings explicitly mentioned will be set. There are no default values.`,
 //	inputs == []string{"foo", "bar", "baz"}
 type stringSliceMultiFlag []string
 
-func (s *stringSliceMultiFlag) String() string {
-	return strings.Join(*s, ",")
+func (s stringSliceMultiFlag) String() string {
+	return strings.Join(s, ",")
 }
 
 func (s *stringSliceMultiFlag) Set(v string) error {
+	if strings.TrimSpace(v) == "" {
+		return nil
+	}
+
 	for part := range strings.SplitSeq(v, ",") {
 		*s = append(*s, strings.TrimSpace(part))
 	}

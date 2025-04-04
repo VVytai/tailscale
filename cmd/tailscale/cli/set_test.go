@@ -195,6 +195,18 @@ func TestStringListFlagParsing(t *testing.T) {
 			want:     []string{"10.0.0.0/8", "192.168.0.0/24", "172.16.0.0/12"},
 			flagName: "advertise-routes",
 		},
+		{
+			name:     "empty string input should be ignored",
+			args:     []string{"--advertise-tags="},
+			want:     nil,
+			flagName: "advertise-tags",
+		},
+		{
+			name:     "whitespace-only input should be ignored",
+			args:     []string{"--advertise-tags=   "},
+			want:     nil,
+			flagName: "advertise-tags",
+		},
 	}
 
 	for _, tt := range tests {
